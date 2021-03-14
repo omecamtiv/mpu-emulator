@@ -7,6 +7,18 @@ The UI consists of:
 - 5 Small Windows
 The program is fully developed using Python Programming Language and Curses Library.
 
+## Installation
+This program uses python curses library and is intended to run in CLI Environment. This has been tested in zsh shell. Install python before use.
+
+Copy this repository using:
+```
+git clone https://github.com/sudipta-nandan/mpu-emulator.git
+```
+Move to the `mpu-emulator` directory and type:
+```
+python main.py
+```
+
 ## Modes
 The emulator has 3 modes:
 1. NORM -> [Normal Mode](#normal-mode)
