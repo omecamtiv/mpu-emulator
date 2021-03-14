@@ -70,3 +70,13 @@ The following are the commands with their action:
 3. `disp <DEC/HEX>`: Set the display to desired mode. Only supported in 'NORM' mode.
 4. `run`: Run the compiled code. Only supported in 'NORM' mode.
 5. `quit`: Close the emulator. Only supported in 'NORM' mode.
+
+## Screenshots
+
+|Normal Mode| |Assembly Mode| |Program Mode|
+|--| |--| |--|
+|![img](.img/image1.jpg)| |![img](.img/image2.jpg)| |![img](.img/image3.jpg)|
+
+|Running Fibonacci Sequence|
+|--|
+|![img](.img/image4.jpg)|
