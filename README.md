@@ -73,9 +73,9 @@ The following are the commands with their action:
 
 ## Screenshots
 
-|Normal Mode| |Assembly Mode| |Program Mode|
-|--| |--| |--|
-|![img](.img/image1.jpg)| |![img](.img/image2.jpg)| |![img](.img/image3.jpg)|
+|Normal Mode|Assembly Mode|Program Mode|
+|--|--|--|
+|![img](.img/image1.jpg)|![img](.img/image2.jpg)|![img](.img/image3.jpg)|
 
 |Running Fibonacci Sequence|
 |--|
