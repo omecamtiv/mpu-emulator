@@ -34,6 +34,7 @@ The codes will be saved for the current session only.
 The emulator supports 2 display modes:
 1. Decimal
 2. Hexadecimal(Default)
+
 These modes can only be changed in Normal Mode.
 The modes change the display to Decimal or Hexadecimal System.
 For further details check [Commands](#commands) Section.
