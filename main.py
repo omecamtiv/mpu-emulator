@@ -109,7 +109,7 @@ def main(stdscr: 'curses._CursesWindow'):
 
     def init_ui(ram, txt, mod, dsp, a, b, cz, pc, mode):
         win_title(ram, "RAM")
-        win_title(txt, "TEXT")
+        win_title(txt, "EDITOR")
         win_title(mod, "MODE")
         win_title(dsp, "DISP")
         win_title(a, "REGA")
@@ -309,7 +309,7 @@ def main(stdscr: 'curses._CursesWindow'):
         elif key == ascii.NL or key == ascii.CR:
             action_enter(calc_mode)
 
-        if cmd == 'quit':
+        if cmd == 'quit' and calc_mode == 'NORM':
             cmd_win.addstr(0, 0, "Do You Want To Quit?(y/N)")
             cmd_win.refresh()
             usr_inpt = None
@@ -326,20 +326,19 @@ def main(stdscr: 'curses._CursesWindow'):
             else:
                 continue
             break
-        elif cmd == 'prog':
-            calc_mode = 'PROG'
-        elif cmd == 'norm':
-            calc_mode = 'NORM'
-        elif cmd == 'asml':
-            calc_mode = 'ASML'
-        elif cmd == 'dec':
-            disp_mode = 'd'
-        elif cmd == 'hex':
-            disp_mode = '02X'
+        elif cmd[:4] == 'mode':
+            arg = cmd[5:]
+            if arg in ['NORM', 'PROG', 'ASML']:
+                calc_mode = arg
+        elif cmd[:4] == 'disp' and calc_mode == 'NORM':
+            arg = cmd[5:]
+            dict = {'DEC': 'd', 'HEX': '02X'}
+            if arg in dict.keys():
+                disp_mode = dict.get(arg, '02X')
         elif cmd == 'run' and calc_mode == 'NORM':
             cpu.reset()
             cpu.set_enabled(True)
-        elif cmd[:4] == 'clk ':
+        elif cmd[:3] == 'clk' and calc_mode == 'NORM':
             arg = cmd[4:]
             try:
                 clk_frq = float(arg)
