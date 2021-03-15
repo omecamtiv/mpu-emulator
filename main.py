@@ -73,11 +73,6 @@ def main(stdscr: 'curses._CursesWindow'):
         pcWin.refresh()
         return (aWin, bWin, czWin, pcWin)
 
-    def validate(ch):
-        if ch == ascii.DEL:
-            box.do_command(curses.KEY_BACKSPACE)
-        return ch
-
     def exit_app(window: 'curses._CursesWindow'):
         window.move(0, 0)
         window.clrtoeol()
@@ -124,7 +119,7 @@ def main(stdscr: 'curses._CursesWindow'):
         window.move(0, 0)
         curses.curs_set(1)
         box = textpad.Textbox(window, insert_mode=True)
-        i = box.edit(validate).strip()
+        i = box.edit().strip()
         curses.curs_set(0)
         window.move(0, 0)
         window.clrtoeol()
@@ -265,7 +260,6 @@ def main(stdscr: 'curses._CursesWindow'):
     ui_win, cmd_win, ram_win, txt_win, mod_win, dsp_win, reg_win = create_ui(
         stdscr)
     a_win, b_win, cz_win, pc_win = create_reg_ui(reg_win)
-    box = textpad.Textbox(cmd_win, True)
 
     while True:
 
@@ -326,6 +320,9 @@ def main(stdscr: 'curses._CursesWindow'):
             else:
                 continue
             break
+        elif cmd == 'reset' and calc_mode == 'NORM':
+            cpu.reset()
+
         elif cmd[:4] == 'mode':
             arg = cmd[5:]
             if arg in ['NORM', 'PROG', 'ASML']:

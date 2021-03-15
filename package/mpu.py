@@ -45,7 +45,11 @@ class Instructions(Enum):
 @unique
 class BitWidth(Enum):
     TWO_BIT = 2
+    FOUR_BIT = 4
     EIGHT_BIT = 8
+    SIXTEEN_BIT = 16
+    THIRTY_TWO_BIT = 32
+    SIXTY_FOUR_BIT = 64
 
     def max_value(self):
         return 2 ** self.value - 1
