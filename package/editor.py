@@ -100,7 +100,7 @@ class Buffer:
 
     def split(self, cursor):
         row, col = cursor.row, cursor.col
-        current = self.lines.pop(row)
+        current = self.lines.pop(row) if (row, col) != (0, 0) else ""
         self.lines.insert(row, current[:col])
         self.lines.insert(row+1, current[col:])
 
@@ -172,12 +172,22 @@ class Editor:
                 self.buffer.split(self.cursor)
                 right(self.window, self.cursor, self.buffer)
             elif k == ascii.DEL:
-                left(self.window, self.cursor, self.buffer)
-                self.buffer.delete(self.cursor)
+                r, c = self.cursor.row, self.cursor.col
+                if (r, c) == (0, 0):
+                    pass
+                else:
+                    left(self.window, self.cursor, self.buffer)
+                    self.buffer.delete(self.cursor)
             else:
                 self.buffer.insert(self.cursor, chr(k))
                 for _ in chr(k):
                     right(self.window, self.cursor, self.buffer)
+
+    def getBuffer(self):
+        text = ""
+        for line in self.buffer.lines:
+            text += line+"\n"
+        return text.strip()
 
 
 if __name__ == '__main__':
@@ -186,7 +196,7 @@ if __name__ == '__main__':
         win = curses.newwin(y//2, x//2, 3, 3)
         win.keypad(True)
         editor = Editor(win)
-        return editor.buffer
+        return editor.getBuffer()
 
     x = wrapper(main)
-    print(x.lines)
+    print(x)

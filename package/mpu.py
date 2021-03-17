@@ -145,7 +145,6 @@ class CPU:
         self.enable = status
 
     def set_instructions(self, commands: list):
-
         for i in range(self.ram_mem.addressMaxValue + 1):
             self.ram_mem.write(i,
                                commands[i]
@@ -378,5 +377,6 @@ if __name__ == '__main__':
         cpu.fetch()
         cpu.decode()
         cpu.execute()
-    print(cpu)
-    print(cpu.carry)
+    l = cpu.ram_mem.get_mem_list()
+    print(len(l))
+    print(l)

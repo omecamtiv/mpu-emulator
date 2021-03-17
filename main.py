@@ -3,7 +3,7 @@ from curses import wrapper
 from package import textpad
 from curses import ascii
 from package.mpu import CPU
-from package import compiler
+from package.compiler import Compiler
 from package.editor import Editor
 
 ram_row = 0
@@ -177,8 +177,9 @@ def main(stdscr: 'curses._CursesWindow'):
         elif mode == 'NORM':
             pass
         elif mode == 'ASML':
-            i = txt_out(txt_win, calc_mode)
-            i_list, _ = compiler.compile(i)
+            list = txt_out(txt_win, calc_mode)
+            compiler = Compiler(list)
+            i_list, _ = compiler.compile()
             cpu.set_instructions(i_list)
 
     def get_index(mode: str):
@@ -245,7 +246,6 @@ def main(stdscr: 'curses._CursesWindow'):
             reg_addstr(window, '--')
 
     def txt_out(window: 'curses._CursesWindow', mode: str):
-        i = ''
         if mode == 'ASML':
             curses.curs_set(1)
             h, w = window.getmaxyx()
@@ -253,9 +253,9 @@ def main(stdscr: 'curses._CursesWindow'):
             textwin.keypad(True)
             editor = Editor(textwin)
             curses.curs_set(0)
-            for x in editor.buffer:
-                i += x+"\n"
-        return i
+            return editor.getBuffer().split()
+        else:
+            return []
 
     ui_win, cmd_win, ram_win, txt_win, mod_win, dsp_win, reg_win = create_ui(
         stdscr)

@@ -47,48 +47,109 @@ class Instructions(Enum):
         return val
 
 
-def compile(code: str):
-    instructions = [e.name for e in Instructions]
-    arg_instructions = ['OUTL', 'OUTR', 'MOVLA', 'MOVLB',
-                        'MOVRA', 'MOVRB', 'MOVAR', 'MOVBR',
-                        'JMPL', 'JMPR', 'JZFL', 'JZFR',
-                        'JCFL', 'JCFR']
-    mem_list = []
-    error_code = 'Success'
-    instructions_list = code.strip().split('\n')
-    length = len(code.strip().split())
-    if length > 256:
-        error_code = 'OverflowError'
-    elif length == 0:
-        pass
-    else:
-        for i in instructions_list:
-            cmd = i.split()
-            if cmd[0] in instructions:
-                if cmd[0] in arg_instructions:
-                    arg = cmd[1]
-                    try:
-                        d = int(arg, 16)
-                        opcode = int(Instructions.find_opcode(
-                            cmd[0]),
-                            16)
-                        mem_list.append(opcode)
-                        mem_list.append(d)
-                    except:
-                        error_code = 'ArgumentError'
-                else:
-                    opcode = int(Instructions.find_opcode(
-                        cmd[0]),
-                        16)
-                    mem_list.append(opcode)
-            else:
-                error_code = 'InstructionError'
+@unique
+class CompilerError(Enum):
+    NoError = 0
+    InstructionError = 1
+    ArgumentError = 2
+    LabelError = 3
+    MaxInstructionsError = 4
 
-    return mem_list, error_code
+
+class Compiler:
+    def __init__(self, list: list):
+        self.list = list
+        self.instructions = [e.name for e in Instructions]
+        self.arg_instructions = ['OUTL', 'OUTR', 'MOVLA',
+                                 'MOVLB', 'MOVRA', 'MOVRB',
+                                 'MOVAR', 'MOVBR', 'JMPL',
+                                 'JMPR', 'JZFL', 'JZFR',
+                                 'JCFL', 'JCFR']
+        self.label = "#"
+        self.counter = 0
+        self.mem_dict = dict()
+        self.error_code = CompilerError.NoError
+
+    @staticmethod
+    def checkHex(hexstring: str):
+        try:
+            int(hexstring, 16)
+            return True
+        except ValueError:
+            return False
+
+    def checkInstruction(self, instruction: str):
+        if instruction in self.instructions:
+            return True
+        else:
+            return False
+
+    def checkArg(self, instruction: str):
+        b = False
+        if instruction in self.arg_instructions:
+            b = True
+        return b
+
+    def checkLabel(self, instruction: str):
+        b = False
+        if instruction[:1] == self.label:
+            b = True
+        return b
+
+    def getCount(self):
+        return self.counter
+
+    def compile(self):
+        n = 0
+        while n < len(self.list):
+            i = self.list[n]
+            if self.checkInstruction(i):
+                pos = self.counter
+                opcode = Instructions.find_opcode(i)
+                self.mem_dict[pos] = opcode
+                self.counter += 1
+                if self.checkArg(i):
+                    pos = self.counter
+                    n += 1
+                    arg = self.list[n]
+                    if self.checkHex(arg):
+                        self.mem_dict[pos] = arg
+                        self.counter += 1
+                    else:
+                        self.error_code = CompilerError.ArgumentError
+                        break
+            else:
+                if self.checkLabel(i):
+                    label = i[1:]
+                    if self.checkHex(label):
+                        c = int(label, 16)
+                        if c not in self.mem_dict:
+                            self.counter = c
+                        else:
+                            self.error_code = CompilerError.LabelError
+                            break
+                    else:
+                        self.error_code = CompilerError.LabelError
+                        break
+                else:
+                    self.error_code = CompilerError.InstructionError
+                    break
+            n += 1
+
+        if self.getCount() >= 256:
+            self.error_code = CompilerError.MaxInstructionsError
+        if self.error_code == CompilerError.NoError:
+            mem_list = []
+            for i in range(256):
+                mem_list.append(self.mem_dict.get(i, "00"))
+            return [int(e, 16) for e in mem_list], self.error_code
+        else:
+            return [], self.error_code
 
 
 if __name__ == '__main__':
-    txt = "MOVLA AB\nOUTA\nHALT"
-    l, e = compile(txt)
+    txt = "#0A\nMOVLA AB\nOUTA\nHALT\n#0E\nMOVLA BA\nOUTA\nHALT"
+    compiler = Compiler(txt.split())
+    l, e = compiler.compile()
     print(l)
-    print(e)
+    print(e.name)
