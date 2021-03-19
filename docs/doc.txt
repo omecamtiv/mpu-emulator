@@ -1,0 +1,62 @@
+
+1. HLT --> Halts the program.
+
+2. OUTL <L> -->  Output a literal value <L>. 
+
+3. OUTR <R> -->  Output the value in <R> register. 
+
+4. OUTA --> Output the value from A register. 
+
+5. OUTB --> Output the value from B register. 
+
+6. MOVLA <L> --> Move a literal value <L> to A register. 
+
+7. MOVLB <L> --> Move a literal value <L> to B register. 
+
+8. MOVRA <R> --> Move the value in <R> register to A register. 
+
+9. MOVRB <R> --> Move the value in <R> register to B register. 
+
+10. MOVAR <R> --> Move the value in A register to <R> register. 
+
+11. MOVBR <R> --> Move the value in B register to <R> register. 
+
+12. ADDA --> Add the values in A and B registers and store in A register.
+
+13. ADDB --> Add the values in A and B registers and store in B register.
+
+14. SUBBA --> --> Substracts the value in B from A register and store in A register.
+
+15. SUBAB --> --> Substracts the value in A from B register and store in B register.
+
+16. ANDA --> Bitwise AND of the values of A and B registers and store in A register. 
+
+17. ANDB --> Bitwise AND of the values of A and B registers and store in B register. 
+
+18. ORA --> Bitwise OR of the values of A and B registers and store in A register.
+
+19. ORB --> Bitwise OR of the values of A and B registers and store in B register.
+
+20. JMPL <L> -->  Jump to the address value <L>.
+
+21. JMPR <R> -->  Jump to the address value in <R> register.
+
+22. JMPA --> Jump to the address value in A register.
+
+23. JMPB --> Jump to the address value in B register.
+
+24. JZFL <L> --> Jump to the address value <L> if ZF = 1.
+
+25. JZFR <R> --> Jump to the address value in <R> register if ZF = 1.
+
+26. JZFA --> Jump to the address value in A register if ZF = 1.
+
+27. JZFB --> Jump to the address value in B register if ZF = 1.
+
+28. JCFL <L> --> Jump to the address value <L> if CF = 1.
+
+29. JCFR <R> --> Jump to the address value in <R> register if CF = 1.
+
+30. JCFA --> Jump to the address value in A register if CF = 1.
+
+31. JCFB --> Jump to the address value in B register if CF = 1.

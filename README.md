@@ -71,6 +71,10 @@ The following are the commands with their action:
 4. `run`: Run the compiled code. Only supported in 'NORM' mode.
 5. `quit`: Close the emulator. Only supported in 'NORM' mode.
 
+## Instructions
+- The Instructions are well documented in [doc.txt](./docs/doc.txt) file.
+- `#<Memory-Address>` label can be used before an instruction to allocate the Memory Address for the rest of the instructions.
+
 ## Screenshots
 
 |Normal Mode|Assembly Mode|Program Mode|
