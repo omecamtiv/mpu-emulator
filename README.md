@@ -1,7 +1,7 @@
 # MPU EMULATOR
 This program in an 8 bit mpu emulator based on Ben Eater's 8 bit computer. 
 The UI consists of:
-- A RAM Windox
+- A RAM Window
 - A Command Window
 - An Editor Window
 - 5 Small Windows
@@ -14,9 +14,9 @@ Copy this repository using:
 ```
 git clone https://github.com/sudipta-nandan/mpu-emulator.git
 ```
-Move to the `mpu-emulator` directory and type:
+Move to the `mpu-emulator` directory and execute main.py by typing:
 ```
-python main.py
+./main.py
 ```
 
 ## Modes
